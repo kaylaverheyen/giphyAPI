@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Halloween Gifs!</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Creepster" rel="stylesheet">
+    <style>
+        h1 {font-family: 'Creepster', cursive;
+        font-size: 50px;
+        text-align: center;
+        }
+        h3 {
+        font-family: 'Creepster', cursive;
+        text-align: center;
+        }
+        body {
+            background-color: lightblue;
+            align-content: center;
+        } 
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- <div class="jumbotron jumbotron-fluid">
+                    <div class="container">
+                        <h1 class="display-4">Halloween Gifs Here:</h1>
+                        <h3>Looking for some great halloween gifs... you've come to the right spot! Press
+                            the buttons below to see al the great HALLOWEEN GIFS.</h3>
+                    </div> </div>-->
+                <br>
+                <br>
+                <button data name="Halloween">Halloween</button>
+                <button data name="pumpkin">pumpkins</button>
+                <button data name="ghost">ghost</button>
+                <button data name="skeleton">skeleton</button>
+                <button data name="witch">witches</button>
+                <button data name="spider">spiders</button>
+                <button data name="scary">scary stuff</button>
+                <button data name="black cat">black cats</button>
+
+                <div id="gifs-appear-here">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        // Initial array of halloween things
+        var topics = ["Halloween", "pumpkin", "ghost", "skeleton", "witch", "spider", "scary", "black cat"];
+
+        $("button").on("click", function () {
+            //var topics = $(this).attr("data-name");
+            var queryURL = "https://api.giphy.com/v1/gifs/search?&q=" + topics + "&api_key=BhyD3YcoLq3cM15Fh1CJRooaoV16PWdJ&limit=10&offset=0&rating=G&lang=en";
+            // Creating an AJAX call for the specific halloween button being clicked
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            })
+                .then(function (response) {
+                    console.log(queryURL);
+
+                    console.log(response);
+
+                    // storing the data from the AJAX request in the results variable
+                    var results = response.data;
+
+                    // Looping through each result item
+                    for (var i = 0; i < results.length; i++) {
+
+                        // Creating and storing a div tag
+                        var topicsDiv = $("<div>");
+
+                        // Creating a paragraph tag with the result item's rating
+                        var p = $("<p>").text("Rating: " + results[i].rating);
+
+                        // Creating and storing an image tag
+                        var topicsImage = $("<img>");
+                        // Setting the src attribute of the image to a property pulled off the result item,. should also have the gifs be static not moving!!!!
+                        topicsImage.attr("src", results[i].images.fixed_height_still.url);
+
+                        // Aappending p tag to img to gifs
+                        topicsDiv.append(p);
+                        topicsDiv.append(topicsImage);
+
+                        // Prependng topics to HTML page in the "#gifs-appear-here" div
+                        $("#gifs-appear-here").prepend(topicsDiv);
+                    }
+                });
+        });
+
+        topicsDiv.on("click", function () {
+            // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
+            var state = $(this).attr("src", results[i].images.fixed_height.url);
+            // If the clicked image's state is still, update its src attribute to what its data-animate value is.
+            // Then, set the image's data-state to animate
+            // Else set src to the data-still value
+            // if (state === "still") {
+            //     $(this).attr("src", $(this).attr("data-animate"));
+            //     $(this).attr("data-state", "animate");
+            // } else {
+            //     $(this).attr("src", $(this).attr("data-still"));
+            //     $(this).attr("data-state", "still");
+            // }
+        });
+
+    </script>
+</body>
+
+</html>
