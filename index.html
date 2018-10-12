@@ -19,9 +19,13 @@
         text-align: center;
         }
         body {
+            margin: 10px;
             background-color: lightblue;
             align-content: center;
         } 
+        form{
+            align-content: center;
+        }
     </style>
 </head>
 
@@ -29,12 +33,13 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <!-- <div class="jumbotron jumbotron-fluid">
+                <div class="jumbotron">
                     <div class="container">
                         <h1 class="display-4">Halloween Gifs Here:</h1>
                         <h3>Looking for some great halloween gifs... you've come to the right spot! Press
                             the buttons below to see al the great HALLOWEEN GIFS.</h3>
-                    </div> </div>-->
+                    </div>
+                </div>
                 <br>
                 <br>
                 <button>Halloween</button>
@@ -45,15 +50,33 @@
                 <button>spiders</button>
                 <button>scary stuff</button>
                 <button>black cats</button>
-
-                <div class="gifs"></div>
-                <br>
-                <br>
-                <br>
-
             </div>
         </div>
     </div>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md-12">
+            <form id="topic-form">
+                <label for="topic-input">Add your own topic!</label>
+                <input type="text" id="topic-input">
+                <br> <br>
+                <!-- Button triggers new movie to be added -->
+                <input id="add-topic" type="submit" value="New Topic!">
+            </form>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="gifs"></div>
+        </div>
+    </div>
+    <div class="gifs"></div>
+    <!-- <br>
+    <br>
+    <br> -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
 
@@ -69,40 +92,44 @@
             $.ajax({
                 url: queryURL,
                 method: "GET"
-            })
-                .then(function (response) {
-                    console.log(queryURL);
+            }).then(function (response) {
 
-                    console.log(response);
+                // function makeButtons() {
+                //     // Deleting the buttons prior to adding new movies
+                //     // (this is necessary otherwise you will have repeat buttons)
+                //     $("#buttons-view").empty(); 
+                console.log(queryURL);
 
-                    // storing the data from the AJAX request in the results variable
-                    var results = response.data;
+                console.log(response);
 
-                    // Looping through each result item
-                    for (var i = 0; i < results.length; i++) {
+                // storing the data from the AJAX request in the results variable
+                var results = response.data;
 
-                        // Creating and storing a div tag
-                        var topicsDiv = $("<div>");
+                // Looping through each result item
+                for (var i = 0; i < results.length; i++) {
 
-                        // Creating a paragraph tag with the result item's rating
-                        var p = $("<p>").text("Rating: " + results[i].rating);
+                    // Creating and storing a div tag
+                    var topicsDiv = $("<div>");
 
-                        // Creating and storing an image tag
-                        var topicsImage = $("<img>");
-                        // Setting the src attribute of the image to a property pulled off the result item,. should also have the gifs be static not moving!!!!
-                        topicsImage.attr("data-state", "still");
-                        topicsImage.attr("src", results[i].images.fixed_height_still.url);
-                        topicsImage.attr("data-animate", results[i].images.fixed_height.url);
-                        topicsImage.attr("data-still", results[i].images.fixed_height_still.url);
+                    // Creating a paragraph tag with the result item's rating
+                    var p = $("<p>").text("Rating: " + results[i].rating);
 
-                        // Aappending p tag to img to gifs
-                        topicsDiv.append(p);
-                        topicsDiv.append(topicsImage);
+                    // Creating and storing an image tag
+                    var topicsImage = $("<img>");
+                    // Setting the src attribute of the image to a property pulled off the result item,. should also have the gifs be static not moving!!!!
+                    topicsImage.attr("data-state", "still");
+                    topicsImage.attr("src", results[i].images.fixed_height_still.url);
+                    topicsImage.attr("data-animate", results[i].images.fixed_height.url);
+                    topicsImage.attr("data-still", results[i].images.fixed_height_still.url);
 
-                        // Prependng topics to HTML page in the "#gifs-appear-here" div
-                        $(".gifs").prepend(topicsDiv);
-                    }
-                });
+                    // Aappending p tag to img to gifs
+                    topicsDiv.append(p);
+                    topicsDiv.append(topicsImage);
+
+                    // Prependng topics to HTML page in the "#gifs-appear-here" div
+                    $(".gifs").prepend(topicsDiv);
+                }
+            });
         });
 
         // $("#gifs").on("click", function () {
@@ -110,9 +137,6 @@
         //$(this).attr("src", "path_to_still.gif");
 
         $(".gifs").on("click", "img", function () {
-            console.log("image clicked");
-            //     return
-            //     $("#gifs").attr("src", results[i].images.fixed_height.url);
             console.log($(this));
             var state = $(this).attr("data-state");
             console.log(state);
@@ -125,7 +149,20 @@
             }
 
         });
+        //when a new topic is added
+        $("#add-topic").on("click", function (event) {
+            event.preventDefault();
 
+            // This line grabs the input from the textbox
+            var newTopic = $("#topic-input").val().trim();
+
+            // Adding the movie from the textbox to our array
+            movies.push(topic);
+            console.log(topics);
+
+            // Calling renderButtons which handles what the buttons do when clicked. 
+            makeButtons();
+        });
 
     </script>
 </body>
