@@ -37,17 +37,20 @@
                     </div> </div>-->
                 <br>
                 <br>
-                <button data name="Halloween">Halloween</button>
-                <button data name="pumpkin">pumpkins</button>
-                <button data name="ghost">ghost</button>
-                <button data name="skeleton">skeleton</button>
-                <button data name="witch">witches</button>
-                <button data name="spider">spiders</button>
-                <button data name="scary">scary stuff</button>
-                <button data name="black cat">black cats</button>
+                <button>Halloween</button>
+                <button>pumpkins</button>
+                <button>ghost</button>
+                <button>skeleton</button>
+                <button>witches</button>
+                <button>spiders</button>
+                <button>scary stuff</button>
+                <button>black cats</button>
 
-                <div id="gifs-appear-here">
-                </div>
+                <div class="gifs"></div>
+                <br>
+                <br>
+                <br>
+
             </div>
         </div>
     </div>
@@ -58,8 +61,10 @@
         var topics = ["Halloween", "pumpkin", "ghost", "skeleton", "witch", "spider", "scary", "black cat"];
 
         $("button").on("click", function () {
-            //var topics = $(this).attr("data-name");
-            var queryURL = "https://api.giphy.com/v1/gifs/search?&q=" + topics + "&api_key=BhyD3YcoLq3cM15Fh1CJRooaoV16PWdJ&limit=10&offset=0&rating=G&lang=en";
+            var chosenTopic = $(this).text();
+            console.log(chosenTopic);
+
+            var queryURL = "https://api.giphy.com/v1/gifs/search?&q=" + chosenTopic + "&api_key=BhyD3YcoLq3cM15Fh1CJRooaoV16PWdJ&limit=10&offset=0&rating=G&lang=en";
             // Creating an AJAX call for the specific halloween button being clicked
             $.ajax({
                 url: queryURL,
@@ -85,32 +90,42 @@
                         // Creating and storing an image tag
                         var topicsImage = $("<img>");
                         // Setting the src attribute of the image to a property pulled off the result item,. should also have the gifs be static not moving!!!!
+                        topicsImage.attr("data-state", "still");
                         topicsImage.attr("src", results[i].images.fixed_height_still.url);
+                        topicsImage.attr("data-animate", results[i].images.fixed_height.url);
+                        topicsImage.attr("data-still", results[i].images.fixed_height_still.url);
 
                         // Aappending p tag to img to gifs
                         topicsDiv.append(p);
                         topicsDiv.append(topicsImage);
 
                         // Prependng topics to HTML page in the "#gifs-appear-here" div
-                        $("#gifs-appear-here").prepend(topicsDiv);
+                        $(".gifs").prepend(topicsDiv);
                     }
                 });
         });
 
-        topicsDiv.on("click", function () {
-            // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
-            var state = $(this).attr("src", results[i].images.fixed_height.url);
-            // If the clicked image's state is still, update its src attribute to what its data-animate value is.
-            // Then, set the image's data-state to animate
-            // Else set src to the data-still value
-            // if (state === "still") {
-            //     $(this).attr("src", $(this).attr("data-animate"));
-            //     $(this).attr("data-state", "animate");
-            // } else {
-            //     $(this).attr("src", $(this).attr("data-still"));
-            //     $(this).attr("data-state", "still");
-            // }
+        // $("#gifs").on("click", function () {
+        //$("#gifs").animate(true, true);
+        //$(this).attr("src", "path_to_still.gif");
+
+        $(".gifs").on("click", "img", function () {
+            console.log("image clicked");
+            //     return
+            //     $("#gifs").attr("src", results[i].images.fixed_height.url);
+            console.log($(this));
+            var state = $(this).attr("data-state");
+            console.log(state);
+            if (state === "still") {
+                $(this).attr("src", $(this).attr("data-animate"));
+                $(this).attr("data-state", "animate");
+            } else {
+                $(this).attr("src", $(this).attr("data-still"));
+                $(this).attr("data-state", "still");
+            }
+
         });
+
 
     </script>
 </body>
