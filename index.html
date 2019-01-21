@@ -10,6 +10,7 @@
         crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Creepster" rel="stylesheet">
     <style>
+
         h1 {font-family: 'Creepster', cursive;
         font-size: 50px;
         text-align: center;
@@ -20,59 +21,81 @@
         }
         body {
             margin: 10px;
-            background-color: lightblue;
+            background-image: url("background.jpg");
             align-content: center;
         } 
         form{
-            align-content: center;
+            align-content: center !important;
         }
+        .buttons{
+        align-content: center;
+        }
+       .jumbotron{
+           opacity:0.65;
+           margin-bottom: 0;
+           padding: 0;
+       }
+       label{
+        font-family: 'Creepster', cursive;
+        font-size: 28px;
+       }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="jumbotron">
-                    <div class="container">
-                        <h1 class="display-4">Halloween Gifs Here:</h1>
-                        <h3>Looking for some great halloween gifs... you've come to the right spot! Press
-                            the buttons below to see al the great HALLOWEEN GIFS.</h3>
-                    </div>
+        <div class="row justify-content-center">
+
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <h1 class="display-4">Halloween Gifs Here:</h1>
+                    <h3>Looking for some great halloween gifs... you've come to the right spot! Press
+                        the buttons below to see all the great HALLOWEEN GIFS.</h3>
                 </div>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
                 <br>
                 <br>
-                <button>Halloween</button>
-                <button>pumpkins</button>
-                <button>ghost</button>
-                <button>skeleton</button>
-                <button>witches</button>
-                <button>spiders</button>
-                <button>scary stuff</button>
-                <button>black cats</button>
+                <div class="buttons">
+                    <button>Halloween</button>
+                    <button>pumpkins</button>
+                    <button>ghost</button>
+                    <button>skeleton</button>
+                    <button>witches</button>
+                    <button>spiders</button>
+                    <button>scary stuff</button>
+                    <button>black cats</button>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+
+        <br>
+        <br>
+        <div class="row justify-content-center">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <form id="topic-form">
+                    <label for="topic-input">Add your own topic!</label>
+                    <input type="text" id="topic-input">
+                    <br> <br>
+                    <!-- Button triggers new movie to be added -->
+                    <input id="add-topic" type="submit" value="New Topic!">
+                </form>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="gifs"></div>
             </div>
         </div>
+        <div class="gifs"></div>
+        <div class="col-md-3"></div>
     </div>
-    <br>
-    <br>
-    <div class="row">
-        <div class="col-md-12">
-            <form id="topic-form">
-                <label for="topic-input">Add your own topic!</label>
-                <input type="text" id="topic-input">
-                <br> <br>
-                <!-- Button triggers new movie to be added -->
-                <input id="add-topic" type="submit" value="New Topic!">
-            </form>
-
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="gifs"></div>
-        </div>
-    </div>
-    <div class="gifs"></div>
     <!-- <br>
     <br>
     <br> -->
